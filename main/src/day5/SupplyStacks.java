@@ -98,9 +98,9 @@ public class SupplyStacks {
     }
 
     public static char getCharacter(char[][] containers, int columnIndex) {
-        for (int i = 0; i < containers.length; i++) {
-            if (containers[i][columnIndex] != ' ') {
-                return containers[i][columnIndex];
+        for (char[] container : containers) {
+            if (container[columnIndex] != ' ') {
+                return container[columnIndex];
             }
         }
         return 0;
@@ -109,21 +109,11 @@ public class SupplyStacks {
     public static char[][] getContainers(char[][] initialContainers) {
         char[][] combinedArray = new char[64][9];
 
-
-        char[][] buffer = new char[56][9];
-        for (int i = 0; i < 56; i++) {
-            for (int j = 0; j < 9; j++) {
-                buffer[i][j] = ' ';
-            }
+        for (char[] chars : combinedArray) {
+            Arrays.fill(chars, ' ');
         }
 
-        for (int i = 0; i < buffer.length; i++) {
-            combinedArray[i] = buffer[i];
-        }
-
-        for (int i = 0; i < initialContainers.length; i++) {
-            combinedArray[i + buffer.length] = initialContainers[i];
-        }
+        System.arraycopy(initialContainers, 0, combinedArray, 56, initialContainers.length);
 
         return combinedArray;
     }
