@@ -39,7 +39,7 @@ public class SupplyStacks {
                 int endNumber = numbers[2] - 1;
 
                 for (int i = 0; i < amount; i++) {
-                    char charToBeMoved = getAndRemoveCharacter(containers, startNumber);
+                    char charToBeMoved = getAndRemoveCharacter(containers, startNumber, amount - 1 - i);
                     int destinationIndex = getEmptyPlaceIndex(containers, endNumber);
                     containers[destinationIndex][endNumber] = charToBeMoved;
 
@@ -86,12 +86,21 @@ public class SupplyStacks {
         return 0;
     }
 
-    public static char getAndRemoveCharacter(char[][] containers, int columnIndex) {
+    public static char getAndRemoveCharacter(char[][] containers, int columnIndex, int howManyFromTop) {
         for (int i = 0; i < containers.length; i++) {
             if (containers[i][columnIndex] != ' ') {
-                char charToBeMoved = containers[i][columnIndex];
-                containers[i][columnIndex] = ' ';
+                char charToBeMoved = containers[i + howManyFromTop][columnIndex];
+                containers[i + howManyFromTop][columnIndex] = ' ';
                 return charToBeMoved;
+            }
+        }
+        return 0;
+    }
+
+    public static char getCharacter(char[][] containers, int columnIndex) {
+        for (int i = 0; i < containers.length; i++) {
+            if (containers[i][columnIndex] != ' ') {
+                return containers[i][columnIndex];
             }
         }
         return 0;
@@ -122,7 +131,7 @@ public class SupplyStacks {
     public static String getAnswer(char[][] containers) {
         StringBuilder answer = new StringBuilder();
         for (int i = 0; i < 9; i++) {
-            answer.append(getAndRemoveCharacter(containers, i));
+            answer.append(getCharacter(containers, i));
         }
         return answer.toString();
     }
